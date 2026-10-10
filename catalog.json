@@ -1,0 +1,20 @@
+{
+  "cts_namespace_token": "plicanon",
+  "authority_uri": "https://purl.archive.org/plicanon/cts/v1",
+  "steward": {
+    "name": "Plicanon Text Alignment & Metadata Initiative",
+    "steward_role": "Lead Systems Architect & Philological Data Steward",
+    "decided_by": "Bhikkhu Ido"
+  },
+  "resolver_endpoints": [
+    {
+      "role": "primary",
+      "url": "https://resolver.plicanon.org/v1/cts"
+    },
+    {
+      "role": "service_availability_fallback",
+      "url": "https://archive.org/services/purl/plicanon/cts"
+    }
+  ],
+  "schema_version": "v4.4-draft"
+}
