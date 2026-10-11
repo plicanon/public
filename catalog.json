@@ -9,7 +9,7 @@
   "resolver_endpoints": [
     {
       "role": "primary",
-      "url": "https://resolver.dhammapedia.com/v1/cts"
+      "url": "https://resolver.dhammapedia-mm.webstarterz.com/v1/cts"
     },
     {
       "role": "service_availability_fallback",
