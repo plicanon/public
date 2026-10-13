@@ -10,10 +10,6 @@
     {
       "role": "primary",
       "url": "https://resolver.dhammapedia-mm.webstarterz.com/v1/cts"
-    },
-    {
-      "role": "service_availability_fallback",
-      "url": "https://archive.org/services/purl/plicanon/cts"
     }
   ],
   "schema_version": "v4.5-draft"
