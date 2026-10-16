@@ -1,0 +1,7 @@
+# Keep the bundle byte for byte. The SHA256SUMS file and the pinned catalog digest
+# (catalog.json: 7b96fd44f544565d34cbae980ed9cd2b57466c001ee8c4a3c21fbdcd6d4059f9)
+# cover exact bytes, so git must not convert line endings (e.g. core.autocrlf on Windows).
+catalog.json                   -text
+plicanon_*                     -text
+README_plicanon_*              -text
+check_*.py                     -text
