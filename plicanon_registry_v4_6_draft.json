@@ -1,0 +1,3319 @@
+{
+  "registry": {
+    "namespace": "plicanon",
+    "profile_version": "4.6.2-draft",
+    "status": "design_draft_gates_a_c_closed_gate_b_partly_open_not_for_public_minting",
+    "design_model": "flat_work_inventory_with_scoped_claims_and_explicit_alignment",
+    "namespace_authority_uri": "https://purl.archive.org/plicanon/cts/v1",
+    "migration_note": "v4.6 records the independent availability endpoint (a Cloudflare Pages copy of the catalog), the pinned catalog digest, and the Zenodo archive record. The catalog file is now part of the bundle so the digest can be verified offline. Gate B stays open; imported metadata remains unreviewed. v4.6.1: the succession block now carries an acceptance record (template file, evidence list) so that successor acceptance can be recorded and checked. Resolver hosting probe (2026-10-15) recorded under namespace_authority.resolver_hosting. v4.6.2: the whois result for the resolver address (2026-10-16) names the holder of its address block; the hosting account holder behind the resolver hostname is not established.",
+    "component_policy": {
+      "textgroup": "pali",
+      "work_ids": "stable local keys, unique within the plicanon namespace; non-semantic labels. The 80 imported mnemonic ids are retained by Gate B decision B3, including 16 that echo a commentary layer; an id is never evidence of classification or relationship",
+      "version_ids": "one atomic registered CTS VERSION token per distinct textual expression, matching ^v[0-9]{4,}$; no dot-separated source/language/translator subfields",
+      "exemplar_ids": "one atomic registered CTS EXEMPLAR token per specific copy/item of a version when item-level identity matters, matching ^x[0-9]{4,}$",
+      "identifier_character_profile": "lowercase ASCII letters, digits, and underscore; no periods or CTS-reserved delimiters inside a single identifier token",
+      "passage_colon": "required even when the passage component is empty",
+      "passage_validation": "full CTS parser plus registered per-work citation model; lexical regex alone is not conformance"
+    },
+    "namespace_authority_uri_status": "decision_required_before_public_minting",
+    "namespace_authority_policy": {
+      "cts_namespace_token": "plicanon",
+      "token_status": "confirmed_permanent",
+      "authority_uri": "https://purl.archive.org/plicanon/cts/v1",
+      "authority_uri_status": "selected_gate_b_open",
+      "requirement": "The CTS namespace token must resolve through the namespace catalog to one stable authority URI.",
+      "resolver_endpoints": "Maintain separately from the authority URI and allow endpoint migration without changing URNs.",
+      "short_token_candidate": {
+        "token": "pli",
+        "status": "not_adopted",
+        "reason": "A short CTS namespace token is not an authority URI; adopting it would create a separate namespace-token migration and requires stewardship/governance approval."
+      },
+      "token_confirmed_on": "2026-10-10"
+    },
+    "recension_identity_policy": {
+      "classification_only_difference": "Never creates a new Work; encode scoped collection-membership and textual-role assertions.",
+      "shared_model_test": "Test S (spec 2.9.2) yields yes/no/uncertain. yes requires a reviewed model, zero unevaluated nodes and an unresolved fraction at or below the steward-set parameter; no requires a reviewer finding of structural irreconcilability with evidence; everything else is uncertain.",
+      "textual_difference_with_shared_reference_model": "Verdict yes: new Version under the same Work, with mappings and lineage metadata.",
+      "separate_work_threshold": "Verdict no, or verdict yes with a documented distinct referential scope: separate Work records, an approved Identity Decision Record and a reviewed relation.",
+      "uncertainty": "Verdict uncertain or missing evidence: HOLD. The smallest affected identifier set stays unminted (minting_state held_uncertain); no provisional public split.",
+      "identity_stability": "Published URNs keep their referents; mappings may be revised with provenance; shared-model changes after minting are additive only.",
+      "decision_record_required": true
+    },
+    "resolver_fallback_policy": {
+      "silent_fallback": "forbidden",
+      "permitted_fallback": "A resolver may offer a separately identified candidate with its own URN, reason, and relation/alignment status; it must not present it as the requested exact text."
+    },
+    "schema_file": "plicanon_registry_v4_6.schema.json",
+    "schema_file_status": "paired_draft_artifact; schema $id uses the reserved example.invalid domain until a public schema location is chosen",
+    "identity_parameters": {
+      "shared_model_max_unresolved_fraction": 0.05,
+      "status": "set_at_gate_a",
+      "note": "Set by the steward at Gate A on 2026-10-10. A model with fewer than 20 nodes tolerates no unresolved node (one uncertain node already exceeds 5%)."
+    },
+    "token_policy": {
+      "work_ids": "Retained by Gate B decision B3 (option a): the 80 mnemonic ids stay as non-semantic keys, including the 16 whose ids end in a, mht or pmt. An id is a label, never a claim; commentary relations are carried by reviewed relationships, not by the id.",
+      "version_exemplar_ids": "Normative by Gate B decision B4. No semantics; metadata corrections never change a minted token.",
+      "patterns": {
+        "version": "^v[0-9]{4,}$",
+        "exemplar": "^x[0-9]{4,}$"
+      },
+      "status": "decided_gate_b"
+    },
+    "minting_policy": {
+      "states": [
+        "blocked",
+        "candidate",
+        "held_uncertain",
+        "approved_for_minting",
+        "minted"
+      ],
+      "eligibility": [
+        "Gates A, B and C closed and a non-null namespace_authority_uri",
+        "citation_model_status is defined and the model's review_status is reviewed",
+        "No open held_uncertain decision references the record",
+        "Any split decision touching the record is an approved Identity Decision Record",
+        "Versions and exemplars additionally need a reviewed version record",
+        "The citation model's node_identity_policy is hierarchical_ordinal (opaque_ids models are excluded from the pilot until node-set storage is specified)",
+        "aggregate_status is not_aggregate, or aggregate with an approved compilation_recorded decision (Tier 2)"
+      ]
+    },
+    "release_gates": [
+      {
+        "id": "A",
+        "label": "Identity and recension rules approved (spec 2.9, Test S, IDR, parameter set)",
+        "status": "closed",
+        "depends_on": [],
+        "closed_on": "2026-10-10",
+        "decided_by": "Bhikkhu Ido, Lead Systems Architect & Philological Data Steward (name and role as declared in the published catalog.json; the B0 reply gave the role only)",
+        "basis": "plicanon_gate_a_review_sheet_v4_3_completed.md"
+      },
+      {
+        "id": "B",
+        "label": "Governance: authority URI, steward, succession, resolver discovery, token plicanon confirmed, work-id policy decided",
+        "status": "open",
+        "depends_on": [
+          "A"
+        ]
+      },
+      {
+        "id": "C",
+        "label": "Legacy audit: every published v2/v3 URN has a legacy_aliases record",
+        "status": "closed",
+        "depends_on": [],
+        "decided_by": "Bhikkhu Ido, Lead Systems Architect & Philological Data Steward (name and role as declared in the published catalog.json; the B0 reply gave the role only)",
+        "closed_on": "2026-10-10",
+        "basis": "plicanon_gate_b_gate_c_decision_record_v4_4.md"
+      },
+      {
+        "id": "D",
+        "label": "Pilot scope fixed and the adopted CTS parser/protocol harness passes",
+        "status": "open",
+        "depends_on": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ],
+    "decision_tiers": {
+      "tier_1_routine": {
+        "covers": [
+          "classification-only difference (no_split)",
+          "new Version with Test S verdict yes",
+          "new exemplar",
+          "artifact revision of class rehost_identical or transcription_correction",
+          "new alias"
+        ],
+        "requires": [
+          "schema validation",
+          "checker recomputation of the record's shared_model_test summary",
+          "reviewed version record"
+        ],
+        "decision_record": "not required"
+      },
+      "tier_2_structural": {
+        "covers": [
+          "separate_work outcome",
+          "any hold or resolution of a hold",
+          "distinct referential scope",
+          "Test S verdict other than yes",
+          "removing or renumbering shared nodes before minting",
+          "compilation or anthology work (aggregate_status aggregate)"
+        ],
+        "requires": [
+          "approved Identity Decision Record"
+        ],
+        "decision_record": "required"
+      },
+      "escalation": "A Tier 1 record whose recomputed Test S verdict is not yes is Tier 2.",
+      "status": "approved_gate_a"
+    },
+    "deferred_decisions": [
+      {
+        "id": "D4",
+        "topic": "Node-set storage for opaque-ID citation models",
+        "decision": "Works that need it are excluded from the pilot.",
+        "status": "deferred_past_pilot",
+        "roadmap_file": "plicanon_deferred_decisions_roadmap_v4_3.md"
+      },
+      {
+        "id": "D5",
+        "topic": "Stemmatic (inter-witness) relations",
+        "decision": "Not modelled; witness_locations record places within a witness only.",
+        "status": "deferred_past_pilot",
+        "roadmap_file": "plicanon_deferred_decisions_roadmap_v4_3.md"
+      }
+    ],
+    "gate_a_record": {
+      "decided_on": "2026-10-10",
+      "basis_file": "plicanon_gate_a_review_sheet_v4_3_completed.md",
+      "walkthrough_cases": "all 13 agreed",
+      "decisions": {
+        "D1": "shared_model_max_unresolved_fraction = 0.05",
+        "D2": "compilation or anthology work added as a Tier 2 trigger",
+        "D3": "reconstructable elision stays partial within Tier 1 summaries",
+        "D4": "works needing opaque node-set storage excluded from the pilot",
+        "D5": "stemmatic relations deferred past the pilot",
+        "D6": "keep v4.2: single textgroup pali under plicanon; classification generated at the browse layer",
+        "D7": "keep v4.2: mechanical rendering is resolver-layer; transliteration with distinct decisions is a separate Version",
+        "D8": "standard_recension grouping not adopted"
+      }
+    },
+    "gate_b_record": {
+      "status": "open",
+      "recorded_on": "2026-10-14",
+      "basis_file": "plicanon_gate_b_gate_c_decision_record_v4_6.md",
+      "answers": {
+        "B0": "approver recorded in the Gate A and Gate C records",
+        "B2": "plicanon confirmed as the permanent namespace token; identifiers read urn:cts:plicanon:pali.<work>...",
+        "B3": "option (a): retain all 80 mnemonic work ids as non-semantic keys",
+        "B4": "adopted as normative: versions ^v[0-9]{4,}$, exemplars ^x[0-9]{4,}$ (four or more digits; the reply said four-digit zero-padded, read here as a minimum width so numbering can grow)"
+      },
+      "b1": {
+        "status": "open",
+        "checked_on": "2026-10-14",
+        "declared": {
+          "authority_uri_declared_in_catalog": "https://purl.archive.org/plicanon/cts/v1",
+          "resolver_purl": "https://purl.archive.org/plicanon/cts/v1",
+          "resolver_target": "https://resolver.dhammapedia-mm.webstarterz.com/v1/cts",
+          "catalog_purl": "https://purl.archive.org/plicanon/catalog.json",
+          "catalog_target": "https://raw.githubusercontent.com/plicanon/public/refs/heads/main/catalog.json",
+          "declared_fallback_endpoint": "https://archive.org/services/purl/plicanon/cts",
+          "steward": "Plicanon Text Alignment & Metadata Initiative",
+          "dereferenceability_policy": "Public read-only HTTP dereferencing to JSON-LD citation metadata and TEI XML fragment payloads (as stated; not yet implemented)",
+          "succession_as_stated": "Mirroring of authority metadata across open-access repositories (as stated; a mirroring policy, not a succession procedure)",
+          "authority_uri_selected": "https://purl.archive.org/plicanon/cts/v1",
+          "fallback_endpoint_replaced_by": "https://public-ae3.pages.dev/catalog.json"
+        },
+        "findings": [
+          "The authority URI is the versioned resolver PURL; the spec permits this (the authority URI need not be the active API endpoint), with the risk that a service version (v1) sits inside a permanent identifier.",
+          "The PURL service allows a single maintainer per domain; the Zenodo record is owned by a single account. The succession statement does not yet cover either.",
+          "The earlier fallback entry returned 404 and was replaced on 2026-10-14 by a Cloudflare Pages copy of the catalog. It is independent of the PURL service and byte-identical to the GitHub copy, but it serves the catalog only and cannot answer CTS requests.",
+          "The primary resolver endpoint answered with a plain-text stub, not a CTS protocol response (a Gate D matter).",
+          "The catalog digest (SHA-256 7b96fd44...) is recorded and was reproduced from the pasted file. The PURL for the catalog still targets the mutable main branch, and the Zenodo 4.5.1 archive reportedly holds a different catalog, so there is no immutable copy of this exact file yet.",
+          "The Zenodo record is published (DOI 10.5281/zenodo.23358712) but its title, description and file name use different version numbers, and the repository it points to lacks files the checker needs.",
+          "Probe of 2026-10-15 (steward-reported): the primary resolver answers from 163.44.198.58 with Apache and PHP 8.0.9, and the Pages mirror from Cloudflare addresses. The resolver is not behind Cloudflare on this evidence, so one Cloudflare outage would not remove both. whois (2026-10-16) names the holder of its address block as GMO Internet Pte. Ltd.; the hosting account holder behind the hostname is not established."
+        ],
+        "missing": [
+          "An immutable copy of the pinned catalog (a Zenodo version carrying this exact file, or a tagged release)",
+          "Evidence that the named successor accepts the role",
+          "Acceptance of a step transferring the PURL maintainer role and the Zenodo record or account",
+          "Acceptance of the durability wording, or a replacement"
+        ],
+        "urls_seen": [
+          "https://purl.archive.org/domain/plicanon",
+          "https://purl.archive.org/help",
+          "https://purl.archive.org/purl/plicanon/catalog.json",
+          "https://purl.archive.org/plicanon/cts/v1",
+          "https://resolver.dhammapedia-mm.webstarterz.com/v1/cts",
+          "https://raw.githubusercontent.com/plicanon/public/refs/heads/main/catalog.json",
+          "https://archive.org/services/purl/plicanon/cts",
+          "https://purl.archive.org/plicanon/catalog.json",
+          "https://public-ae3.pages.dev/catalog.json",
+          "https://zenodo.org/records/23358712",
+          "https://doi.org/10.5281/zenodo.23358712",
+          "https://github.com/plicanon/public"
+        ],
+        "urls_proposed": [],
+        "urls_proposed_note": "No proposed URLs remain: the steward selected the declared authority URI instead of the domain root.",
+        "answered": [
+          "authority_uri",
+          "succession_successor",
+          "steward_durability_statement",
+          "external_registration",
+          "fallback_endpoint",
+          "catalog_digest",
+          "resolver_hosting_provider_name"
+        ],
+        "open": [
+          "catalog_immutable_copy",
+          "successor_acceptance",
+          "purl_and_zenodo_ownership_transfer",
+          "durability_statement_wording"
+        ]
+      }
+    },
+    "gate_c_record": {
+      "decided_on": "2026-10-10",
+      "basis_file": "plicanon_gate_b_gate_c_decision_record_v4_4.md",
+      "result": "none_known_published",
+      "statement": "As stated by the steward: v2 and v3 drafts were internal experimental specifications and were never published in external catalogues, cited in peer-reviewed literature, or exposed through a public API.",
+      "legacy_aliases": "none required; the legacy_aliases array stays empty. Records exist only for known published legacy URNs (spec 4.8)."
+    },
+    "namespace_authority": {
+      "authority_uri": "https://purl.archive.org/plicanon/cts/v1",
+      "authority_uri_kind": "purl_fronting_resolver_endpoint",
+      "authority_uri_note": "The PURL name is the authority URI and its redirect target is the mutable resolver endpoint. The name contains a service version (v1) by decision: it must persist indefinitely even if the API later moves to a new version, which would get its own PURL and would not change the authority URI.",
+      "steward": "Plicanon Text Alignment & Metadata Initiative",
+      "resolution_mechanism": "Self-declared project catalog at https://purl.archive.org/plicanon/catalog.json. No external namespace registration is intended beyond the Internet Archive PURL service.",
+      "dereferenceability_policy": "Public read-only HTTP dereferencing to JSON-LD citation metadata and TEI XML fragment payloads (as stated; not yet implemented: the resolver is a stub).",
+      "succession": {
+        "successor": "Open Pali Text Society / Digital Humanities Archives Committee",
+        "transfers": [
+          "minting authority",
+          "namespace-catalog records",
+          "resolver endpoints"
+        ],
+        "in_flight_work": "Gate D conformance shifts to the successor",
+        "invariant": "previously minted URNs remain immutable",
+        "status": "stated_acceptance_by_successor_not_evidenced",
+        "gaps": [
+          "Transfer of the PURL domain maintainer role (the PURL service allows one maintainer per domain)"
+        ],
+        "acceptance": {
+          "status": "not_evidenced",
+          "template_file": "plicanon_successor_acceptance_statement_template.md",
+          "evidence": [],
+          "note": "No statement has been received. An evidence entry needs: file, sha256, channel, received_on, signer_name, signer_role, institution, authority_basis, covers_transfer_items (true), effective_date or trigger. The statement file must be in the bundle with no unfilled placeholders."
+        }
+      },
+      "durability_statement": {
+        "as_stated": "Hosted within open digital humanities repository infrastructure backed by the Internet Archive's PURL persistence and multi-site repository mirroring.",
+        "status": "proposed_wording_not_accepted",
+        "observed": "The PURL service stores redirects only. The resolver is on a third-party hosting subdomain and the catalog is on GitHub. No mirror was observed.",
+        "proposed": "Authority metadata and releases are published in three independent places: the Internet Archive PURL service (persistent redirects), GitHub (source and catalog, mirrored on Cloudflare Pages), and Zenodo (archived releases with DOIs). The resolver is hosted separately and can be retargeted through the PURL without changing any URN."
+      },
+      "fallback_endpoint": {
+        "url": "https://public-ae3.pages.dev/catalog.json",
+        "kind": "static_catalog_availability_endpoint",
+        "status": "accepted",
+        "serves_cts_requests": false,
+        "independent_of_purl": true,
+        "verified_on": "2026-10-14",
+        "verified_by": "steward-reported command output (HTTP 200, application/json, served by Cloudflare; body digest equal to the GitHub main copy)",
+        "limits": "Serves the catalog only. It cannot answer CTS requests, so passages cannot be resolved while the primary resolver is down. It is not a CTS resolver fallback.",
+        "replaces": "https://archive.org/services/purl/plicanon/cts (returned 404 and was on the same PURL service)"
+      },
+      "catalog_pinning": {
+        "status": "digest_recorded",
+        "file": "catalog.json",
+        "digest_sha256": "7b96fd44f544565d34cbae980ed9cd2b57466c001ee8c4a3c21fbdcd6d4059f9",
+        "byte_form": "UTF-8, LF line endings, one trailing newline",
+        "verified_identical_on": [
+          {
+            "url": "https://raw.githubusercontent.com/plicanon/public/refs/heads/main/catalog.json",
+            "verified_on": "2026-10-14"
+          },
+          {
+            "url": "https://public-ae3.pages.dev/catalog.json",
+            "verified_on": "2026-10-14"
+          }
+        ],
+        "bundled_copy": "catalog.json",
+        "immutable_copy": {
+          "status": "pending",
+          "note": "The Zenodo 4.5.1 archive was reported to hold a different catalog (SHA-256 21502c57c038d7309555833c169e509d04c991985f71c1659ba310c120b51cc8). The next Zenodo version should carry this file."
+        },
+        "observed_not_pinned": {
+          "sha256_of_4_5_1_local_copy": "21502c57c038d7309555833c169e509d04c991985f71c1659ba310c120b51cc8",
+          "note": "Reported by the steward; the file itself was not seen."
+        }
+      },
+      "catalog_mirrors": [
+        {
+          "url": "https://public-ae3.pages.dev/catalog.json",
+          "provider": "Cloudflare Pages",
+          "status": "accepted",
+          "sha256": "7b96fd44f544565d34cbae980ed9cd2b57466c001ee8c4a3c21fbdcd6d4059f9",
+          "verified_on": "2026-10-14",
+          "verified_against": "https://raw.githubusercontent.com/plicanon/public/refs/heads/main/catalog.json"
+        }
+      ],
+      "archive_records": [
+        {
+          "kind": "zenodo",
+          "record_url": "https://zenodo.org/records/23358712",
+          "doi": "10.5281/zenodo.23358712",
+          "published": "2026-10-14",
+          "version_label": "v2",
+          "title": "PliCanon CTS URN v4.5.1 Release",
+          "file": "public-4.5.1.zip",
+          "md5": "08265772b7e215ff61c9eca1cc267953",
+          "status": "published",
+          "notes": "Contents of the zip not inspected. The description still refers to v4.5; the bundle's own version numbering has no 4.5.1."
+        }
+      ],
+      "resolver_hosting": {
+        "url": "https://resolver.dhammapedia-mm.webstarterz.com/v1/cts",
+        "observed_on": "2026-10-15",
+        "http_status": 200,
+        "ip": "163.44.198.58",
+        "server_header": "Apache",
+        "x_powered_by": "PHP/8.0.9",
+        "content_type": "text/plain;charset=UTF-8",
+        "provider_name": "GMO Internet Pte. Ltd.",
+        "provider_name_status": "established",
+        "catalog_mirror_ips": [
+          "172.66.44.153",
+          "172.66.47.103"
+        ],
+        "shares_provider_with_catalog_mirror": false,
+        "basis": "APNIC whois (reached by IANA referral) for 163.44.198.58, reported by the steward 2026-10-16: inetnum 163.44.198.0 - 163.44.198.255, netname ZCOM-THAI, descr GMO INTERNET PTE. LTD. (Singapore address), country TH, status ALLOCATED NON-PORTABLE, mnt-by MAINT-GMOINTERNETINC-JP (GMO Internet Inc, Tokyo), last-modified 2023-02-09. This names the registered holder of the address block. It does not establish who holds the hosting account: the resolver hostname is under webstarterz.com, so a reseller or hosting brand may sit between the steward and GMO. Separately, the resolver is not on the mirror's provider: its address is outside the Cloudflare range the mirror uses (172.64.0.0/13) and its response carries no Cloudflare headers (inference from the 2026-10-15 probe).",
+        "verified_by": "steward-reported command output (curl -sI, dig +short, 2026-10-15 11:22 GMT; whois 163.44.198.58, 2026-10-16); no reverse lookup, hosting control panel or contract checked",
+        "note": "The headers name software (Apache, PHP 8.0.9), not a company; the company name comes from the whois record. provider_name is the address-block holder. The hosting account holder (possibly a reseller under webstarterz.com) is not established; the hosting control panel or invoice would settle it."
+      }
+    }
+  },
+  "textgroups": [
+    {
+      "id": "pali",
+      "label": "Pāli textual-work inventory",
+      "purpose": "A stable organizational container, not a claim about canonical status, genre, textual genealogy, or tradition membership.",
+      "status": "proposed"
+    }
+  ],
+  "works": [
+    {
+      "id": "svibh",
+      "preferred_title": "Suttavibhaṅga",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Vin (vols. III–V)",
+      "citation_model_id": "vinaya_vibhanga",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "vinaya",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "vinaya",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "mv",
+      "preferred_title": "Mahāvagga",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Vin (vols. I–II)",
+      "citation_model_id": "vinaya_khandhaka",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "vinaya",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "vinaya",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "cv",
+      "preferred_title": "Cūḷavagga",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Vin (vols. IV–V)",
+      "citation_model_id": "vinaya_khandhaka",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "vinaya",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "vinaya",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "pari",
+      "preferred_title": "Parivāra",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Vin (vol. V)",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "vinaya",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "vinaya",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "dn",
+      "preferred_title": "Dīgha Nikāya",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "D",
+      "citation_model_id": "nikaya_sutta",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "mn",
+      "preferred_title": "Majjhima Nikāya",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "M",
+      "citation_model_id": "nikaya_sutta",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "sn",
+      "preferred_title": "Saṃyutta Nikāya",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "S",
+      "citation_model_id": "nikaya_samyutta",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "an",
+      "preferred_title": "Aṅguttara Nikāya",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "A",
+      "citation_model_id": "nikaya_anguttara",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "khp",
+      "preferred_title": "Khuddakapāṭha",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Khp",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "dhp",
+      "preferred_title": "Dhammapada",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Dhp",
+      "citation_model_id": "verse_absolute",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "ud",
+      "preferred_title": "Udāna",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Ud",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "it",
+      "preferred_title": "Itivuttaka",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "It",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "snp",
+      "preferred_title": "Suttanipāta",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Sn",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "vv",
+      "preferred_title": "Vimānavatthu",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Vv",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "pv",
+      "preferred_title": "Petavatthu",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Pv",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "thag",
+      "preferred_title": "Theragāthā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Th",
+      "citation_model_id": "verse_absolute",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "thig",
+      "preferred_title": "Therīgāthā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Thī",
+      "citation_model_id": "verse_absolute",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "ja",
+      "preferred_title": "Jātaka",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Ja",
+      "citation_model_id": "jataka",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "nidd1",
+      "preferred_title": "Mahāniddesa",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Nidd I",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "nidd2",
+      "preferred_title": "Cūḷaniddesa",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Nidd II",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "patis",
+      "preferred_title": "Paṭisambhidāmagga",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Paṭis",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "ap",
+      "preferred_title": "Apadāna",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Ap",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "bv",
+      "preferred_title": "Buddhavaṃsa",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Bv",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "cp",
+      "preferred_title": "Cariyāpiṭaka",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Cp",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "nett",
+      "preferred_title": "Nettippakaraṇa",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Nett",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "pet",
+      "preferred_title": "Peṭakopadesa",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Peṭ",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "mil",
+      "preferred_title": "Milindapañha",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Mil",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "sutta",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "sutta",
+        "source_genre": null
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "dhs",
+      "preferred_title": "Dhammasaṅgaṇī",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Dhs",
+      "citation_model_id": "abhidhamma",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "abhidhamma",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "abhidhamma",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "vibh",
+      "preferred_title": "Vibhaṅga",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Vibh",
+      "citation_model_id": "abhidhamma",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "abhidhamma",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "abhidhamma",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "dhatuk",
+      "preferred_title": "Dhātukathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Dhātuk",
+      "citation_model_id": "abhidhamma",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "abhidhamma",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "abhidhamma",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "pugg",
+      "preferred_title": "Puggalapaññatti",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Pugg",
+      "citation_model_id": "abhidhamma",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "abhidhamma",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "abhidhamma",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "kv",
+      "preferred_title": "Kathāvatthu",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Kvu",
+      "citation_model_id": "abhidhamma",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "abhidhamma",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "abhidhamma",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "yam",
+      "preferred_title": "Yamaka",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Yam",
+      "citation_model_id": "abhidhamma",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "abhidhamma",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "abhidhamma",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "patth",
+      "preferred_title": "Paṭṭhāna",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Paṭṭh",
+      "citation_model_id": "abhidhamma",
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "abhidhamma",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "abhidhamma",
+        "source_genre": null
+      },
+      "citation_model_status": "defined",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "sv",
+      "preferred_title": "Sumaṅgalavilāsinī (on DN)",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Sv / D-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "ps",
+      "preferred_title": "Papañcasūdanī (on MN)",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Ps / M-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "spk",
+      "preferred_title": "Sāratthappakāsinī (on SN)",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Spk / S-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "mp",
+      "preferred_title": "Manorathapūraṇī (on AN)",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Mp / A-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "as",
+      "preferred_title": "Atthasālinī (on Dhs)",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "As / Dhs-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "dha",
+      "preferred_title": "Dhammapadaṭṭhakathā (on Dhp)",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Dh-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "sp",
+      "preferred_title": "Samantapāsādikā (on Vinaya)",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Sp",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "kkh",
+      "preferred_title": "Kaṅkhāvitaraṇī (on Pātimokkha)",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Kkh",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "jaa",
+      "preferred_title": "Jātakaṭṭhavaṇṇanā (on Ja)",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Ja-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "uda",
+      "preferred_title": "Udāna-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Ud-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "vva",
+      "preferred_title": "Vimānavatthu-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Vv-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "pva",
+      "preferred_title": "Petavatthu-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Pv-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "thaga",
+      "preferred_title": "Theragāthā-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Th-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "thiga",
+      "preferred_title": "Therīgāthā-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Thī-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "nidd1a",
+      "preferred_title": "Mahāniddesa-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Nidd I-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "nidd2a",
+      "preferred_title": "Cūḷaniddesa-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Nidd II-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "patisa",
+      "preferred_title": "Paṭisambhidāmagga-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Paṭis-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "apa",
+      "preferred_title": "Apadāna-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Ap-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "bva",
+      "preferred_title": "Buddhavaṃsa-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Bv-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "cpa",
+      "preferred_title": "Cariyāpiṭaka-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Cp-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "nitta",
+      "preferred_title": "Nettippakaraṇa-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Nett-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "peta",
+      "preferred_title": "Peṭakopadesa-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Peṭ-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "mila",
+      "preferred_title": "Milindapañha-aṭṭhakathā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Mil-a",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "sad",
+      "preferred_title": "Sāratthadīpanī (on Sv)",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Sāratthadīpanī",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "atthakatha",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "atthakatha"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "vismmht",
+      "preferred_title": "Visuddhimagga-mahāṭīkā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "tika",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "tika"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "vismpmt",
+      "preferred_title": "Visuddhimagga-purāṇaṭīkā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "tika",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "tika"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "saratthamanjusa",
+      "preferred_title": "Sāratthamañjūsā (on Ps)",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "tika",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "tika"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "paramatthamanjusa",
+      "preferred_title": "Paramatthamañjūsā (on Abhidhammaṭṭhasaṅgaha)",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "tika",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "tika"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "vajirabuddhi",
+      "preferred_title": "Vajirabuddhi-ṭīkā (on Vinaya)",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "tika",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "tika"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "vism",
+      "preferred_title": "Visuddhimagga",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Vism",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "pakkarana",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "pakkarana"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "abhv",
+      "preferred_title": "Abhidhammāvatāra",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": "Abhv",
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "pakkarana",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "pakkarana"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "saccasankhepa",
+      "preferred_title": "Saccasaṅkhepa",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "pakkarana",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "pakkarana"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "rupa",
+      "preferred_title": "Rūpārūpavibhāga",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "pakkarana",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "pakkarana"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "moha",
+      "preferred_title": "Mohavicchedanī",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "pakkarana",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "pakkarana"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "mhv",
+      "preferred_title": "Mahāvaṃsa",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "vamsa",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "vamsa"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "cuv",
+      "preferred_title": "Cūḷavaṃsa",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "vamsa",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "vamsa"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "thv",
+      "preferred_title": "Thūpavaṃsa",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "vamsa",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "vamsa"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "dtv",
+      "preferred_title": "Dāṭhavaṃsa",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "vamsa",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "vamsa"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "bodhivamsa",
+      "preferred_title": "Bodhivaṃsa",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "vamsa",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "vamsa"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "kacc",
+      "preferred_title": "Kaccāyana-vyākaraṇa",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "vyakarana",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "vyakarana"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "mogg",
+      "preferred_title": "Moggallāna-vyākaraṇa",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "vyakarana",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "vyakarana"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "sadd",
+      "preferred_title": "Saddanīti",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "vyakarana",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "vyakarana"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "padarupa",
+      "preferred_title": "Padarūpasiddhi",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "vyakarana",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "vyakarana"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "balarupa",
+      "preferred_title": "Balarūpasiddhi",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "vyakarana",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "vyakarana"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "abhidhanappadipika",
+      "preferred_title": "Abhidhānappadīpikā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "lexicon",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "lexicon"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    },
+    {
+      "id": "namamala",
+      "preferred_title": "Nāmamālā",
+      "title_language": null,
+      "legacy_scholarly_abbreviation": null,
+      "citation_model_id": null,
+      "classification_assertions": [],
+      "legacy_assertions": [
+        {
+          "scheme_id": "legacy_textgroup_v3",
+          "value": "commentarial",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        },
+        {
+          "scheme_id": "legacy_genre_v3",
+          "value": "lexicon",
+          "asserted_by": "plicanon_registry_v3_draft.json",
+          "status": "imported_unreviewed"
+        }
+      ],
+      "relationships": [],
+      "review_status": "imported_unreviewed",
+      "provenance": {
+        "source_file": "plicanon_registry_v3_draft.json",
+        "source_textgroup": "commentarial",
+        "source_genre": "lexicon"
+      },
+      "citation_model_status": "not_recorded",
+      "minting_state": "blocked",
+      "aggregate_status": "not_assessed"
+    }
+  ],
+  "versions": [],
+  "exemplars": [],
+  "sources": [
+    {
+      "id": "pts",
+      "description": "Pali Text Society edition",
+      "record_kind": "legacy_source_term",
+      "review_status": "unreviewed_for_version_identity"
+    },
+    {
+      "id": "cscd",
+      "description": "Chaṭṭha Saṅgāyana CD-ROM (VRI)",
+      "record_kind": "legacy_source_term",
+      "review_status": "unreviewed_for_version_identity"
+    },
+    {
+      "id": "cst",
+      "description": "Chaṭṭha Saṅgīti Tipiṭaka (Burmese Council edition)",
+      "record_kind": "legacy_source_term",
+      "review_status": "unreviewed_for_version_identity"
+    },
+    {
+      "id": "bjt",
+      "description": "Buddha Jayanti Tripiṭaka (Sri Lankan)",
+      "record_kind": "legacy_source_term",
+      "review_status": "unreviewed_for_version_identity"
+    },
+    {
+      "id": "thai",
+      "description": "Mahachulalongkorn University / Thai edition",
+      "record_kind": "legacy_source_term",
+      "review_status": "unreviewed_for_version_identity"
+    },
+    {
+      "id": "shb",
+      "description": "Simon Hewavitarne Bequest Series",
+      "record_kind": "legacy_source_term",
+      "review_status": "unreviewed_for_version_identity"
+    },
+    {
+      "id": "kuthodaw",
+      "description": "Kuthodaw Pagoda Inscription",
+      "record_kind": "legacy_source_term",
+      "review_status": "unreviewed_for_version_identity"
+    },
+    {
+      "id": "vri",
+      "description": "Vipassana Research Institute edition",
+      "record_kind": "legacy_source_term",
+      "review_status": "unreviewed_for_version_identity"
+    },
+    {
+      "id": "bps",
+      "description": "Buddhist Publication Society edition",
+      "record_kind": "legacy_source_term",
+      "review_status": "unreviewed_for_version_identity"
+    },
+    {
+      "id": "sc",
+      "description": "SuttaCentral segmented edition",
+      "record_kind": "legacy_source_term",
+      "review_status": "unreviewed_for_version_identity"
+    }
+  ],
+  "languages": [
+    {
+      "id": "pli",
+      "iso_639_3": "pli",
+      "language": "Pāli",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "eng",
+      "iso_639_3": "eng",
+      "language": "English",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "deu",
+      "iso_639_3": "deu",
+      "language": "German",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "fra",
+      "iso_639_3": "fra",
+      "language": "French",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "ita",
+      "iso_639_3": "ita",
+      "language": "Italian",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "spa",
+      "iso_639_3": "spa",
+      "language": "Spanish",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "jpn",
+      "iso_639_3": "jpn",
+      "language": "Japanese",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "zho",
+      "iso_639_3": "zho",
+      "language": "Chinese",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "tha",
+      "iso_639_3": "tha",
+      "language": "Thai",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "mya",
+      "iso_639_3": "mya",
+      "language": "Burmese",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "sin",
+      "iso_639_3": "sin",
+      "language": "Sinhala",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "lat",
+      "iso_639_3": "lat",
+      "language": "Latin",
+      "review_status": "imported_unreviewed"
+    }
+  ],
+  "translators": [
+    {
+      "id": "rhysdavids",
+      "name": "T.W. Rhys Davids",
+      "record_kind": "legacy_person_term",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "horner",
+      "name": "I.B. Horner",
+      "record_kind": "legacy_person_term",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "bodhi",
+      "name": "Bhikkhu Bodhi",
+      "record_kind": "legacy_person_term",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "nanamoli",
+      "name": "Bhikkhu Ñāṇamoli",
+      "record_kind": "legacy_person_term",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "norman",
+      "name": "K.R. Norman",
+      "record_kind": "legacy_person_term",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "walsh",
+      "name": "Maurice O'C. Walshe",
+      "record_kind": "legacy_person_term",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "neumann",
+      "name": "Karl Eugen Neumann",
+      "record_kind": "legacy_person_term",
+      "review_status": "imported_unreviewed"
+    },
+    {
+      "id": "geiger",
+      "name": "Wilhelm Geiger",
+      "record_kind": "legacy_person_term",
+      "review_status": "imported_unreviewed"
+    }
+  ],
+  "citation_models": [
+    {
+      "id": "nikaya_sutta",
+      "applies_to": [
+        "dn",
+        "mn"
+      ],
+      "pattern": "SUTTA[.SECTION]",
+      "examples": [
+        "1",
+        "16.3"
+      ],
+      "status": "legacy_scheme_requires_validation",
+      "provenance": "plicanon_registry_v3_draft.json",
+      "review_status": "imported_unreviewed",
+      "node_identity_policy": "unspecified"
+    },
+    {
+      "id": "nikaya_samyutta",
+      "applies_to": [
+        "sn"
+      ],
+      "pattern": "SAMYUTTA.SUTTA[.SECTION]",
+      "examples": [
+        "12.1",
+        "35.28.5"
+      ],
+      "status": "legacy_scheme_requires_validation",
+      "provenance": "plicanon_registry_v3_draft.json",
+      "review_status": "imported_unreviewed",
+      "node_identity_policy": "unspecified"
+    },
+    {
+      "id": "nikaya_anguttara",
+      "applies_to": [
+        "an"
+      ],
+      "pattern": "NIPATA.SUTTA[.SECTION]",
+      "examples": [
+        "4.32",
+        "8.54.2"
+      ],
+      "status": "legacy_scheme_requires_validation",
+      "provenance": "plicanon_registry_v3_draft.json",
+      "review_status": "imported_unreviewed",
+      "node_identity_policy": "unspecified"
+    },
+    {
+      "id": "verse_absolute",
+      "applies_to": [
+        "dhp",
+        "thag",
+        "thig"
+      ],
+      "pattern": "VERSE",
+      "examples": [
+        "1",
+        "423"
+      ],
+      "status": "legacy_scheme_requires_validation",
+      "provenance": "plicanon_registry_v3_draft.json",
+      "alternatives": [
+        {
+          "scheme": "CHAPTER.VERSE",
+          "registry_defined": true,
+          "examples": [
+            "1.1"
+          ]
+        }
+      ],
+      "review_status": "imported_unreviewed",
+      "node_identity_policy": "unspecified"
+    },
+    {
+      "id": "jataka",
+      "applies_to": [
+        "ja"
+      ],
+      "pattern": "JATAKA[.VERSE]",
+      "examples": [
+        "150",
+        "547.25"
+      ],
+      "status": "legacy_scheme_requires_validation",
+      "provenance": "plicanon_registry_v3_draft.json",
+      "review_status": "imported_unreviewed",
+      "node_identity_policy": "unspecified"
+    },
+    {
+      "id": "vinaya_vibhanga",
+      "applies_to": [
+        "svibh"
+      ],
+      "pattern": "CATEGORY.RULE",
+      "examples": [
+        "parajika.1",
+        "pacittiya.45"
+      ],
+      "status": "legacy_scheme_requires_validation",
+      "provenance": "plicanon_registry_v3_draft.json",
+      "note": "Standard scholarly reference is PTS volume.page (concordance layer only).",
+      "review_status": "imported_unreviewed",
+      "node_identity_policy": "unspecified"
+    },
+    {
+      "id": "vinaya_khandhaka",
+      "applies_to": [
+        "mv",
+        "cv"
+      ],
+      "pattern": "VAGGA.SECTION",
+      "examples": [
+        "1.2",
+        "7.1"
+      ],
+      "status": "legacy_scheme_requires_validation",
+      "provenance": "plicanon_registry_v3_draft.json",
+      "note": "Passage component does not repeat the work identifier.",
+      "review_status": "imported_unreviewed",
+      "node_identity_policy": "unspecified"
+    },
+    {
+      "id": "abhidhamma",
+      "applies_to": [
+        "dhs",
+        "vibh",
+        "dhatuk",
+        "pugg",
+        "kv",
+        "yam",
+        "patth"
+      ],
+      "pattern": "CHAPTER[.SECTION[.SUBSECTION]]",
+      "examples": [
+        "1",
+        "3.2",
+        "7.1.4"
+      ],
+      "status": "legacy_scheme_requires_validation",
+      "provenance": "plicanon_registry_v3_draft.json",
+      "review_status": "imported_unreviewed",
+      "node_identity_policy": "unspecified"
+    }
+  ],
+  "classification_schemes": [
+    {
+      "id": "literary_form",
+      "label": "Literary form",
+      "multi_valued": true,
+      "closed_vocabulary": false,
+      "scope_rule": "An assertion may describe a work, a part of a work, or one edition; scope must be explicit when it is not the whole work.",
+      "status": "proposed"
+    },
+    {
+      "id": "tradition_membership",
+      "label": "Collection or tradition membership",
+      "multi_valued": true,
+      "closed_vocabulary": false,
+      "scope_rule": "Every membership assertion must name the tradition/collection and evidence or source; no global canonical=true/false field.",
+      "status": "proposed"
+    },
+    {
+      "id": "textual_role",
+      "label": "Textual role",
+      "multi_valued": true,
+      "closed_vocabulary": false,
+      "scope_rule": "Role claims such as commentary, sub-commentary, grammar, chronicle, or manual are classifications; relations to a specific target work are separate records.",
+      "status": "proposed"
+    },
+    {
+      "id": "legacy_textgroup_v3",
+      "label": "Original v3 textgroup assignment",
+      "multi_valued": false,
+      "closed_vocabulary": true,
+      "values": [
+        "vinaya",
+        "sutta",
+        "abhidhamma",
+        "commentarial",
+        "atthakatha",
+        "tika",
+        "vamsa",
+        "pakkarana",
+        "vyakarana",
+        "lexicon",
+        "other"
+      ],
+      "scope_rule": "Historical migration provenance only; not used to construct v4 URNs.",
+      "status": "migration_only"
+    },
+    {
+      "id": "legacy_genre_v3",
+      "label": "Original v3 genre assignment",
+      "multi_valued": false,
+      "closed_vocabulary": true,
+      "values": [
+        "atthakatha",
+        "lexicon",
+        "pakkarana",
+        "tika",
+        "vamsa",
+        "vyakarana"
+      ],
+      "scope_rule": "Historical migration provenance only; no assertion is assumed verified.",
+      "status": "migration_only"
+    }
+  ],
+  "relationship_types": [
+    {
+      "id": "comments_on",
+      "directional": true,
+      "meaning": "The subject work comments on the target work."
+    },
+    {
+      "id": "subcomments_on",
+      "directional": true,
+      "meaning": "The subject work is a sub-commentary on the target work."
+    },
+    {
+      "id": "translates",
+      "directional": true,
+      "meaning": "The subject work is a translation of the target work."
+    },
+    {
+      "id": "quotes",
+      "directional": true,
+      "meaning": "The subject work quotes the target work."
+    },
+    {
+      "id": "derived_from",
+      "directional": true,
+      "meaning": "The subject work is explicitly claimed to derive from the target work."
+    },
+    {
+      "id": "same_work_as",
+      "directional": false,
+      "meaning": "An editorial assertion of work-level identity; requires evidence and review."
+    },
+    {
+      "id": "related_to",
+      "directional": false,
+      "meaning": "A broad symmetric relation that makes no claim of identity or equivalence."
+    },
+    {
+      "id": "recension_of",
+      "directional": true,
+      "meaning": "The subject is registered as a distinct textual recension related to a broader work record."
+    }
+  ],
+  "collections": [],
+  "alignment_sets": [],
+  "witness_locations": [],
+  "identifier_examples": [
+    {
+      "urn": "urn:cts:plicanon:pali:",
+      "work_id": null,
+      "version_id": null,
+      "status": "illustrative_only",
+      "note": "Textgroup-level CTS URN. The empty passage component is expressed by the required final colon."
+    },
+    {
+      "urn": "urn:cts:plicanon:pali.dn:",
+      "work_id": "dn",
+      "version_id": null,
+      "status": "illustrative_only",
+      "note": "Work-level URN. It does not claim an edition or specific passage."
+    },
+    {
+      "urn": "urn:cts:plicanon:pali.dn:16.3",
+      "work_id": "dn",
+      "version_id": null,
+      "status": "illustrative_only",
+      "note": "Shared logical passage address; content retrieval must disclose or explicitly select a concrete version."
+    },
+    {
+      "urn": "urn:cts:plicanon:pali.dn.v0001:16.3",
+      "work_id": "dn",
+      "version_id": "v0001",
+      "status": "illustrative_only",
+      "note": "Version-level passage. The version token must be backed by a complete, reviewed version record before it is mintable/resolvable."
+    },
+    {
+      "urn": "urn:cts:plicanon:pali.dn.v0001.x0001:16.3",
+      "work_id": "dn",
+      "version_id": "v0001",
+      "exemplar_id": "x0001",
+      "status": "illustrative_only",
+      "note": "Exemplar-level passage. The exemplar must identify one specific item/copy of the registered version; it is not merely another source/language subfield."
+    }
+  ],
+  "legacy_migration": {
+    "policy": "Never reinterpret version and exemplar components by guesswork. Preserve old identifiers as aliases when they have been published; add a fully explicit mapping where semantics are known.",
+    "legacy_textgroups": [
+      {
+        "id": "vinaya",
+        "proposed_v4_target": "pali",
+        "source_file": "plicanon_registry_v3_draft.json",
+        "status": "legacy_classification_not_identity"
+      },
+      {
+        "id": "sutta",
+        "proposed_v4_target": "pali",
+        "source_file": "plicanon_registry_v3_draft.json",
+        "status": "legacy_classification_not_identity"
+      },
+      {
+        "id": "abhidhamma",
+        "proposed_v4_target": "pali",
+        "source_file": "plicanon_registry_v3_draft.json",
+        "status": "legacy_classification_not_identity"
+      },
+      {
+        "id": "commentarial",
+        "proposed_v4_target": "pali",
+        "source_file": "plicanon_registry_v3_draft.json",
+        "status": "legacy_classification_not_identity"
+      },
+      {
+        "id": "atthakatha",
+        "proposed_v4_target": "pali",
+        "source_file": "plicanon_registry_v3_draft.json",
+        "status": "legacy_classification_not_identity"
+      },
+      {
+        "id": "tika",
+        "proposed_v4_target": "pali",
+        "source_file": "plicanon_registry_v3_draft.json",
+        "status": "legacy_classification_not_identity"
+      },
+      {
+        "id": "vamsa",
+        "proposed_v4_target": "pali",
+        "source_file": "plicanon_registry_v3_draft.json",
+        "status": "legacy_classification_not_identity"
+      },
+      {
+        "id": "pakkarana",
+        "proposed_v4_target": "pali",
+        "source_file": "plicanon_registry_v3_draft.json",
+        "status": "legacy_classification_not_identity"
+      },
+      {
+        "id": "vyakarana",
+        "proposed_v4_target": "pali",
+        "source_file": "plicanon_registry_v3_draft.json",
+        "status": "legacy_classification_not_identity"
+      },
+      {
+        "id": "lexicon",
+        "proposed_v4_target": "pali",
+        "source_file": "plicanon_registry_v3_draft.json",
+        "status": "legacy_classification_not_identity"
+      },
+      {
+        "id": "other",
+        "proposed_v4_target": "pali",
+        "source_file": "plicanon_registry_v3_draft.json",
+        "status": "legacy_classification_not_identity"
+      }
+    ],
+    "safe_rule": "Versionless old work URNs can be mapped from their old textgroup to pali when the work identifier and passage model have been verified.",
+    "unsafe_rule": "Version-qualified URNs such as sutta.dn.pts.pli must not be automatically rewritten as version=pts_pli: CTS parses pts as VERSION and pli as EXEMPLAR under the standard four-level hierarchy.",
+    "publication_gate": "Before public minting, inventory all previously published v2/v3 URNs and freeze permanent aliases. If v3 URNs have already been cited, do not treat this draft as permission to change their meaning.",
+    "v4_1_policy": {
+      "namespace_token": "Keep plicanon in all proposed v4.1 URNs; do not rewrite to pli without a separately approved namespace migration.",
+      "version_exemplar_interpretation": "Legacy dotted strings are interpreted under CTS ordering first. Never reinterpret source/language/translator dots as a composite VERSION unless a curated, provenance-bearing migration record proves that historic software used a non-CTS interpretation.",
+      "fallback": "Never redirect an ambiguous or unavailable legacy reference to an arbitrary nearest passage or default witness."
+    },
+    "v4_2_policy": {
+      "alias_records": "Every known published legacy URN gets a legacy_aliases record: mapped, quarantined_ambiguous, or rejected.",
+      "ambiguous": "Quarantined forms resolve to an explicit ambiguity response, never to a default or nearest target.",
+      "no_published_urns_known": "Gate C stays open until the audit result is recorded, including a recorded result of none."
+    }
+  },
+  "urn_syntax": {
+    "prefix": "urn:cts:plicanon:",
+    "work_component": "TEXTGROUP[.WORK[.VERSION[.EXEMPLAR]]]",
+    "profile_token_pattern": "^[a-z][a-z0-9_]*$",
+    "lexical_envelope_regex": "^urn:cts:plicanon:[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*){0,3}:.*$",
+    "passage_delimiter": "A final colon is required even when PASSAGE is empty.",
+    "notes": [
+      "The lexical regex is not a complete CTS parser.",
+      "Validate parent relationships and passage/range/subreference syntax using the adopted CTS grammar and work citation model.",
+      "A non-empty passage is invalid on a textgroup-only URN."
+    ]
+  },
+  "identity_decisions": [],
+  "legacy_aliases": []
+}

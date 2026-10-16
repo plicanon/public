@@ -1,0 +1,736 @@
+{
+ "note": "Synthetic cases for exercising spec 2.9 and 2.9.8. Not about any real text or edition. 'parameters' equals the registry value set at Gate A (0.05); the checker verifies they match.",
+ "cases": [
+  {
+   "id": "fixture_01",
+   "walkthrough_case": 1,
+   "label": "Classification-only (collection membership differs)",
+   "inputs": {
+    "classification_only": true
+   },
+   "expected": "no_split"
+  },
+  {
+   "id": "fixture_02",
+   "walkthrough_case": 2,
+   "label": "Multiple functional roles",
+   "inputs": {
+    "classification_only": true
+   },
+   "expected": "no_split"
+  },
+  {
+   "id": "fixture_03",
+   "walkthrough_case": 4,
+   "label": "Edition-specific numbering, reviewed model, all nodes evaluated",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 40,
+     "partial": 5,
+     "unmatched": 0,
+     "uncertain": 0,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "new_version"
+  },
+  {
+   "id": "fixture_04",
+   "walkthrough_case": 7,
+   "label": "Reordering mapped many-to-one; unresolved (3 of 63) within parameter",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 50,
+     "partial": 10,
+     "unmatched": 0,
+     "uncertain": 3,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "new_version"
+  },
+  {
+   "id": "fixture_05",
+   "walkthrough_case": 10,
+   "label": "Same source, two materially different editions",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 30,
+     "partial": 0,
+     "unmatched": 0,
+     "uncertain": 0,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "new_version"
+  },
+  {
+   "id": "fixture_06",
+   "walkthrough_case": 6,
+   "label": "Edition lacks a unit (unmatched counts as evaluated)",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 19,
+     "partial": 0,
+     "unmatched": 1,
+     "uncertain": 0,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "new_version"
+  },
+  {
+   "id": "fixture_07",
+   "walkthrough_case": 4,
+   "label": "Model not reviewed",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": false,
+    "node_states": {
+     "mapped": 40,
+     "partial": 0,
+     "unmatched": 0,
+     "uncertain": 0,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "held"
+  },
+  {
+   "id": "fixture_08",
+   "walkthrough_case": 4,
+   "label": "Unresolved fraction above parameter",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 30,
+     "partial": 0,
+     "unmatched": 0,
+     "uncertain": 10,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "held"
+  },
+  {
+   "id": "fixture_09",
+   "walkthrough_case": 4,
+   "label": "Any not_evaluated node blocks yes",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 99,
+     "partial": 0,
+     "unmatched": 0,
+     "uncertain": 0,
+     "not_evaluated": 1
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "held"
+  },
+  {
+   "id": "fixture_10",
+   "walkthrough_case": 3,
+   "label": "Irreconcilable with evidence and reviewed relation",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 5,
+     "partial": 0,
+     "unmatched": 15,
+     "uncertain": 0,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": true,
+    "irreconcilable_evidence": [
+     "synthetic evidence entry"
+    ],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": "reviewed"
+   },
+   "expected": "separate_work"
+  },
+  {
+   "id": "fixture_11",
+   "walkthrough_case": 3,
+   "label": "Irreconcilable but relation only unreviewed (title-suffix style)",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 5,
+     "partial": 0,
+     "unmatched": 15,
+     "uncertain": 0,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": true,
+    "irreconcilable_evidence": [
+     "synthetic evidence entry"
+    ],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": "unreviewed"
+   },
+   "expected": "held"
+  },
+  {
+   "id": "fixture_12",
+   "walkthrough_case": 4,
+   "label": "Irreconcilable finding without evidence",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 5,
+     "partial": 0,
+     "unmatched": 15,
+     "uncertain": 0,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": true,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": "reviewed"
+   },
+   "expected": "held"
+  },
+  {
+   "id": "fixture_13",
+   "walkthrough_case": 10,
+   "label": "Test S yes plus documented distinct referential scope",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 30,
+     "partial": 0,
+     "unmatched": 0,
+     "uncertain": 0,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": true,
+    "distinct_scope_documented": true,
+    "relation_status": "reviewed"
+   },
+   "expected": "separate_work"
+  },
+  {
+   "id": "fixture_14",
+   "walkthrough_case": 10,
+   "label": "Distinct scope asserted but undocumented",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 30,
+     "partial": 0,
+     "unmatched": 0,
+     "uncertain": 0,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": true,
+    "distinct_scope_documented": false,
+    "relation_status": "reviewed"
+   },
+   "expected": "held"
+  },
+  {
+   "id": "fixture_15",
+   "walkthrough_case": 4,
+   "label": "Parameter unset in the registry: yes unreachable",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 40,
+     "partial": 0,
+     "unmatched": 0,
+     "uncertain": 0,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "override_parameter": null,
+   "expected": "held"
+  },
+  {
+   "id": "fixture_elision_01",
+   "walkthrough_case": 13,
+   "label": "Contracted edition elides a run by repetition marker; elided nodes classed partial (reconstructable by a recorded rule)",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 20,
+     "partial": 8,
+     "unmatched": 0,
+     "uncertain": 0,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "new_version"
+  },
+  {
+   "id": "fixture_elision_02",
+   "walkthrough_case": 13,
+   "label": "Elision policy undetermined: it is unknown how many repetitions a marker stands for",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 20,
+     "partial": 0,
+     "unmatched": 0,
+     "uncertain": 8,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "held"
+  },
+  {
+   "id": "fixture_elision_03",
+   "walkthrough_case": 13,
+   "label": "Contraction not reconstructable: elided nodes classed unmatched (evaluated)",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 20,
+     "partial": 0,
+     "unmatched": 8,
+     "uncertain": 0,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "new_version"
+  },
+  {
+   "id": "fixture_elision_04",
+   "walkthrough_case": 13,
+   "label": "Elision spans the model: some elided nodes never evaluated",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 20,
+     "partial": 4,
+     "unmatched": 0,
+     "uncertain": 0,
+     "not_evaluated": 4
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "held"
+  },
+  {
+   "id": "fixture_16",
+   "walkthrough_case": 4,
+   "label": "Boundary: unresolved fraction exactly at the parameter (1 of 20)",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 19,
+     "partial": 0,
+     "unmatched": 0,
+     "uncertain": 1,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "new_version"
+  },
+  {
+   "id": "fixture_17",
+   "walkthrough_case": 4,
+   "label": "Boundary: just above the parameter (2 of 39)",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 37,
+     "partial": 0,
+     "unmatched": 0,
+     "uncertain": 2,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "held"
+  },
+  {
+   "id": "fixture_18",
+   "walkthrough_case": 4,
+   "label": "Small model: 1 uncertain of 10 nodes already exceeds the parameter",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 9,
+     "partial": 0,
+     "unmatched": 0,
+     "uncertain": 1,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "held"
+  },
+  {
+   "id": "fixture_19",
+   "walkthrough_case": 4,
+   "label": "Renumbering only: numbering differs, every node evaluated",
+   "inputs": {
+    "classification_only": false,
+    "model_reviewed": true,
+    "node_states": {
+     "mapped": 60,
+     "partial": 0,
+     "unmatched": 0,
+     "uncertain": 0,
+     "not_evaluated": 0
+    },
+    "structural_irreconcilable": false,
+    "irreconcilable_evidence": [],
+    "distinct_scope_asserted": false,
+    "distinct_scope_documented": false,
+    "relation_status": null
+   },
+   "expected": "new_version"
+  }
+ ],
+ "alignment_fixtures": [
+  {
+   "id": "align_01",
+   "label": "Contraction: one local elision marker covers shared nodes 5 to 9 (grouped, relation contains)",
+   "expect": "valid",
+   "alignment_set": {
+    "id": "aset_01",
+    "work_id": "fixture_work",
+    "mappings": [
+     {
+      "id": "a01_5",
+      "shared_ref": "5",
+      "version_id": "v0001",
+      "relation": "contains",
+      "status": "draft",
+      "local_reference": "5-9_marker",
+      "group_id": "grp_5_9"
+     },
+     {
+      "id": "a01_6",
+      "shared_ref": "6",
+      "version_id": "v0001",
+      "relation": "contains",
+      "status": "draft",
+      "local_reference": "5-9_marker",
+      "group_id": "grp_5_9"
+     },
+     {
+      "id": "a01_7",
+      "shared_ref": "7",
+      "version_id": "v0001",
+      "relation": "contains",
+      "status": "draft",
+      "local_reference": "5-9_marker",
+      "group_id": "grp_5_9"
+     },
+     {
+      "id": "a01_8",
+      "shared_ref": "8",
+      "version_id": "v0001",
+      "relation": "contains",
+      "status": "draft",
+      "local_reference": "5-9_marker",
+      "group_id": "grp_5_9"
+     },
+     {
+      "id": "a01_9",
+      "shared_ref": "9",
+      "version_id": "v0001",
+      "relation": "contains",
+      "status": "draft",
+      "local_reference": "5-9_marker",
+      "group_id": "grp_5_9"
+     }
+    ],
+    "review_status": "draft"
+   }
+  },
+  {
+   "id": "align_02",
+   "label": "Expansion: another version has one exact local node per shared node",
+   "expect": "valid",
+   "alignment_set": {
+    "id": "aset_02",
+    "work_id": "fixture_work",
+    "mappings": [
+     {
+      "id": "a02_5",
+      "shared_ref": "5",
+      "version_id": "v0002",
+      "relation": "exact",
+      "status": "draft",
+      "local_reference": "n5"
+     },
+     {
+      "id": "a02_6",
+      "shared_ref": "6",
+      "version_id": "v0002",
+      "relation": "exact",
+      "status": "draft",
+      "local_reference": "n6"
+     },
+     {
+      "id": "a02_7",
+      "shared_ref": "7",
+      "version_id": "v0002",
+      "relation": "exact",
+      "status": "draft",
+      "local_reference": "n7"
+     },
+     {
+      "id": "a02_8",
+      "shared_ref": "8",
+      "version_id": "v0002",
+      "relation": "exact",
+      "status": "draft",
+      "local_reference": "n8"
+     },
+     {
+      "id": "a02_9",
+      "shared_ref": "9",
+      "version_id": "v0002",
+      "relation": "exact",
+      "status": "draft",
+      "local_reference": "n9"
+     }
+    ],
+    "review_status": "draft"
+   }
+  },
+  {
+   "id": "align_03",
+   "label": "Elided nodes with no local text marked unmatched, no local reference",
+   "expect": "valid",
+   "alignment_set": {
+    "id": "aset_03",
+    "work_id": "fixture_work",
+    "mappings": [
+     {
+      "id": "a03_6",
+      "shared_ref": "6",
+      "version_id": "v0003",
+      "relation": "unmatched",
+      "status": "draft"
+     },
+     {
+      "id": "a03_7",
+      "shared_ref": "7",
+      "version_id": "v0003",
+      "relation": "unmatched",
+      "status": "draft"
+     }
+    ],
+    "review_status": "draft"
+   }
+  },
+  {
+   "id": "align_04",
+   "label": "Two exact mappings claim the same shared node in one version",
+   "expect": "invalid",
+   "alignment_set": {
+    "id": "aset_04",
+    "work_id": "fixture_work",
+    "mappings": [
+     {
+      "id": "a04_a",
+      "shared_ref": "6",
+      "version_id": "v0001",
+      "relation": "exact",
+      "status": "draft",
+      "local_reference": "x1"
+     },
+     {
+      "id": "a04_b",
+      "shared_ref": "6",
+      "version_id": "v0001",
+      "relation": "exact",
+      "status": "draft",
+      "local_reference": "x2"
+     }
+    ],
+    "review_status": "draft"
+   }
+  },
+  {
+   "id": "align_05",
+   "label": "One group spans two versions",
+   "expect": "invalid",
+   "alignment_set": {
+    "id": "aset_05",
+    "work_id": "fixture_work",
+    "mappings": [
+     {
+      "id": "a05_a",
+      "shared_ref": "5",
+      "version_id": "v0001",
+      "relation": "contains",
+      "status": "draft",
+      "local_reference": "mk",
+      "group_id": "grp_x"
+     },
+     {
+      "id": "a05_b",
+      "shared_ref": "6",
+      "version_id": "v0002",
+      "relation": "contains",
+      "status": "draft",
+      "local_reference": "mk",
+      "group_id": "grp_x"
+     }
+    ],
+    "review_status": "draft"
+   }
+  },
+  {
+   "id": "align_06",
+   "label": "An unmatched mapping that still names a local reference",
+   "expect": "invalid",
+   "alignment_set": {
+    "id": "aset_06",
+    "work_id": "fixture_work",
+    "mappings": [
+     {
+      "id": "a06_a",
+      "shared_ref": "6",
+      "version_id": "v0001",
+      "relation": "unmatched",
+      "status": "draft",
+      "local_reference": "x9"
+     }
+    ],
+    "review_status": "draft"
+   }
+  },
+  {
+   "id": "align_07",
+   "label": "Duplicate mapping ids",
+   "expect": "invalid",
+   "alignment_set": {
+    "id": "aset_07",
+    "work_id": "fixture_work",
+    "mappings": [
+     {
+      "id": "dup",
+      "shared_ref": "5",
+      "version_id": "v0001",
+      "relation": "exact",
+      "status": "draft",
+      "local_reference": "x5"
+     },
+     {
+      "id": "dup",
+      "shared_ref": "6",
+      "version_id": "v0001",
+      "relation": "exact",
+      "status": "draft",
+      "local_reference": "x6"
+     }
+    ],
+    "review_status": "draft"
+   }
+  }
+ ],
+ "parameters": {
+  "shared_model_max_unresolved_fraction": 0.05
+ }
+}
