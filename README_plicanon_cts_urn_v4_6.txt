@@ -22,6 +22,8 @@ Unchanged since v4.5 or earlier:
 - plicanon_deferred_decisions_roadmap_v4_3.md (proposal), plicanon_resolver_binding_design_v4_3.md, plicanon_resolver_binding_fixtures_v4_3.json, check_resolver_binding_proposal_v4_3.py (proposal and its ten fixtures; run separately)
 - change history: plicanon_cts_urn_v4_5_changes_from_v4_4.md, plicanon_cts_urn_v4_4_changes_from_v4_3.md, plicanon_cts_urn_v4_3_changes_from_v4_2.md, plicanon_cts_urn_v4_2_changes_from_v4_1.md
 
+Note on catalog.json: its "schema_version" field ("v4.5") is the version of the catalog's own format, not the bundle version. The catalog's format has not changed since v4.5, so the file is kept byte for byte to preserve the pinned SHA-256. Do not edit it to match the bundle version.
+
 Where each rule lives
 - JSON Schema: structure, enums and conditionals inside one record. The checker runs it first.
 - Checker: rules that look across records, files or computed values (gate dependencies, minting eligibility, Test S recomputation, alignment-set rules, URL provenance, the availability endpoint and pin conditions, offline verification of catalog.json).

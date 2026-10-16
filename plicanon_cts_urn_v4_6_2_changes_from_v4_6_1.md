@@ -20,7 +20,7 @@
 - Decision record: new section on the resolver's host; item 5 removed from the Gate B closing list.
 - Specification text: one sentence in the Gate B item 1 summary (recorded, no longer open). No rule changed.
 - Successor acceptance template: the example registry version is `4.6.2-draft`, and the resolver row describes the address-block holder and the unknown hosting account holder.
-- README: version and status line. Validation report regenerated. SHA256SUMS regenerated.
+- README: version and status line, and a note that catalog.json's `schema_version` (`v4.5`) is the catalog format version, not the bundle version. Validation report regenerated. SHA256SUMS regenerated.
 
 ## Not changed
 
